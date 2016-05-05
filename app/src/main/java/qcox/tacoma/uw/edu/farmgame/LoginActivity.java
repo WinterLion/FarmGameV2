@@ -20,13 +20,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import qcox.tacoma.uw.edu.farmgame.data.PlayerValues;
-
+/**
+ * User has to log in to continue to play
+ * @author james
+ * @version 1.0
+ * @since 2016-5-4
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private static final String LOGIN_URL
             = "http://cssgate.insttech.washington.edu/~_450atm17/james.php?cmd=users";
     private Users mUsers;
 
+    /**
+     * create activity and perform log in function
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +49,13 @@ public class LoginActivity extends AppCompatActivity {
 
         if (button_login != null) {
             button_login.setOnClickListener(new View.OnClickListener() {
+
+                /**
+                 * restrict the user input. username has to be an email and password has to be at least 6 characters long
+                 * if the input is valid, start to download username and password
+                 * then check if it matched
+                 * @param v
+                 */
                 @Override
                 public void onClick(View v) {
                     String username = editText_username.getText().toString();
@@ -72,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
-
             if (button_goToRegister != null) {
                 button_goToRegister.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -89,9 +104,19 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
+    /**
+     * inner class to perform downloading username and password
+     * @author james
+     * @version 1.0
+     * @since 2016-5-4
+     */
     private class LoginTask extends AsyncTask<String, Void, String> {
 
+        /**
+         * perform downloading username and password in the background
+         * @param urls
+         * @return success if download is successful.
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -122,7 +147,10 @@ public class LoginActivity extends AppCompatActivity {
             return response;
         }
 
-
+        /**
+         * check if download is successful
+         * @param result
+         */
         @Override
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.

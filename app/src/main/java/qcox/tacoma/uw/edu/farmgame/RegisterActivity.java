@@ -20,7 +20,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-
+/**
+ * User has to register before log in
+ * @author james
+ * @version 1.0
+ * @since 2016-5-4
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private final static String COURSE_ADD_URL
@@ -29,7 +34,10 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText editText_password;
     private Button button_register;
 
-
+    /**
+     * create activity and perform register function
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +49,13 @@ public class RegisterActivity extends AppCompatActivity {
         final Button button_backToLogin = (Button) findViewById(R.id.button_backToLogin);
 
         button_register.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * restrict the user input. username has to be an email and password has to be at least 6 characters long
+             * if the input is valid, start to download username and password
+             * then check if it matched
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 final String username = editText_username.getText().toString();
@@ -68,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                String url = buildCourseURL(v);
+                String url = buildRegisterURL(v);
                 register(url);
 
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -77,18 +92,24 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        button_backToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
+        if (button_backToLogin != null) {
+            button_backToLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
     }
 
-    private String buildCourseURL(View v) {
+    /**
+     * build the URL that can perform registration
+     * @param v
+     * @return the url to register
+     */
+    private String buildRegisterURL(View v) {
         StringBuilder sb = new StringBuilder(COURSE_ADD_URL);
         try {
             String username = editText_username.getText().toString();
@@ -107,15 +128,19 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return sb.toString();
     }
-
+    /**
+     * inner class to perform registration
+     * @author james
+     * @version 1.0
+     * @since 2016-5-4
+     */
     private class RegisterTask extends AsyncTask<String, Void, String> {
 
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
+        /**
+         * perform registration in the background
+         * @param urls
+         * @return success if registration is successful.
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -176,6 +201,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * create AsyncTask object to register
+     * @param url
+     */
     public void register(String url){
         RegisterTask task = new RegisterTask();
         task.execute(new String[]{url.toString()});

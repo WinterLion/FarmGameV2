@@ -14,19 +14,31 @@ import qcox.tacoma.uw.edu.farmgame.highscore.HighScore;
 /**
  * {@link RecyclerView.Adapter} that can display a {@link HighScore} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
+ *
+ * use adapter to handle single list view display
+ * @author james
+ * @version 1.0
+ * @since 2016-5-4
  */
 public class MyscoreRecyclerViewAdapter extends RecyclerView.Adapter<MyscoreRecyclerViewAdapter.ViewHolder> {
 
     private final List<HighScore> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-
-    public MyscoreRecyclerViewAdapter(List<HighScore> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    /**
+     * constructor
+     * @param highScores
+     * @param listener
+     */
+    public MyscoreRecyclerViewAdapter(List<HighScore> highScores, OnListFragmentInteractionListener listener) {
+        mValues = highScores;
         mListener = listener;
     }
 
+    /**
+     * {@inheritDoc}
+     * set single list view layout as its parent but not link to its parent(set false)
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -34,6 +46,11 @@ public class MyscoreRecyclerViewAdapter extends RecyclerView.Adapter<MyscoreRecy
         return new ViewHolder(view);
     }
 
+    /**
+     * put highscore and username to the correct place
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
@@ -52,17 +69,31 @@ public class MyscoreRecyclerViewAdapter extends RecyclerView.Adapter<MyscoreRecy
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getItemCount() {
         return mValues.size();
     }
 
+    /**
+     * adapter view helper class
+     * @author james
+     * @version 1.0
+     * @since 2016-5-4
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
         public HighScore mItem;
 
+        /**
+         * constructor
+         * set single line of the view
+         * @param view
+         */
         public ViewHolder(View view) {
             super(view);
             mView = view;
@@ -70,6 +101,9 @@ public class MyscoreRecyclerViewAdapter extends RecyclerView.Adapter<MyscoreRecy
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

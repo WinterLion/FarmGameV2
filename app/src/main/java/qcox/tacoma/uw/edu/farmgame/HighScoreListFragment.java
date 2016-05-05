@@ -24,10 +24,10 @@ import qcox.tacoma.uw.edu.farmgame.highscore.HighScore;
 
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * This is a listFragment used to display all highscore
+ * @author james
+ * @version 1.0
+ * @since 2016-5-4
  */
 public class HighScoreListFragment extends Fragment {
 
@@ -47,7 +47,6 @@ public class HighScoreListFragment extends Fragment {
     public HighScoreListFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static HighScoreListFragment newInstance(int columnCount) {
         HighScoreListFragment fragment = new HighScoreListFragment();
@@ -57,6 +56,10 @@ public class HighScoreListFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,13 @@ public class HighScoreListFragment extends Fragment {
         }
     }
 
+    /**
+     * start to download highscore then fragment view is created
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,11 +96,13 @@ public class HighScoreListFragment extends Fragment {
         DownloadHighscoreTask task = new DownloadHighscoreTask();
         task.execute(new String[]{HIGHSCORE_URL});
 
-
         return view;
     }
 
-
+    /**
+     * {@inheritDoc}
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -102,6 +114,10 @@ public class HighScoreListFragment extends Fragment {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * deteach OnListFragmentInteractionListener
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -123,7 +139,19 @@ public class HighScoreListFragment extends Fragment {
         void onListFragmentInteraction(HighScore item);
 
     }
+
+    /**
+     * private class used to download highscore by using AsyncTask
+     * @author james
+     * @version 1.0
+     * @since 2016-5-4
+     */
     private class DownloadHighscoreTask extends AsyncTask<String, Void, String> {
+
+        /**
+         * check if highscore is download sucessfully
+         * @param result
+         */
         @Override
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
@@ -148,6 +176,11 @@ public class HighScoreListFragment extends Fragment {
             }
         }
 
+        /**
+         * download highscore
+         * @param urls
+         * @return success if successfully download. Otherwise, return fail reason
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
