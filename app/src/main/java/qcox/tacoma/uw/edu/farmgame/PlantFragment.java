@@ -10,20 +10,25 @@ import android.view.ViewGroup;
 
 
 /**
+ * This fragment is for when the player wants to plant something and they will be allowed to choose
+ * which plant to use.
+ *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link PlantFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link PlantFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
  */
 public class PlantFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 

@@ -23,7 +23,9 @@ import qcox.tacoma.uw.edu.farmgame.highscore.HighScore;
  * This class was meant to be used for communicating with the server for various things.  Right now
  * all we have is the communications for the money.
  *
- * Created by Quinn Cox on 5/4/2016.
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
  */
 public class PlayerValuesDB {
 
@@ -35,6 +37,10 @@ public class PlayerValuesDB {
             = "http://cssgate.insttech.washington.edu/~_450atm17/playervalues.php?cmd=setmoney&user=";
     private Activity mActivity;
 
+    /**
+     * this method gets the amount of money the user has from the server database
+     * @param theActivity this is used for publishing toasts
+     */
     public void GetUserMoney(Activity theActivity) {
         mActivity = theActivity;
         DownloadUserMoneyTask task = new DownloadUserMoneyTask();
@@ -43,7 +49,7 @@ public class PlayerValuesDB {
     }
 
     /**
-     * This method will start an asynch task that updates the server database with the new money amount.
+     * This method will start an async task that updates the server database with the new money amount.
      *
      * @param theActivity this is needed to allow toasts
      * @param theNewAmount this is the amount that will be put on the server database.
@@ -79,6 +85,11 @@ public class PlayerValuesDB {
         return reason;
     }
 
+    /**
+     * this task looks at the return of setting the amount to see if it was a success.
+     * @param amountJSON this is the JSON returned from the php.
+     * @return the string showing success or failure.
+     */
     public static String parseSetAmountJSONJSON(String amountJSON) {
         String reason = null;
         if (amountJSON != null) {
@@ -93,6 +104,9 @@ public class PlayerValuesDB {
         return reason;
     }
 
+    /**
+     * this task downloads the money the user has.
+     */
     private class DownloadUserMoneyTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPostExecute(String result) {
@@ -142,6 +156,9 @@ public class PlayerValuesDB {
 
     }
 
+    /**
+     * this task updates the database with how much money the user has.
+     */
     private class UploadUserMoneyTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPostExecute(String result) {
@@ -187,7 +204,5 @@ public class PlayerValuesDB {
             }
             return response;
         }
-
-
     }
 }

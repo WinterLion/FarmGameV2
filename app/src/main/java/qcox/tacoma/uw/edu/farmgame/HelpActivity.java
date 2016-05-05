@@ -7,6 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+/**
+ * this class is currently just a placeholder for a use case we have not implemented yet.
+ *
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
+ */
 public class HelpActivity extends AppCompatActivity {
 
     @Override

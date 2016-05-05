@@ -7,6 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+/**
+ * This class is currently not used but will be added in a future release.
+ *
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
+ */
 public class MainMenuActivity extends AppCompatActivity {
 
     @Override

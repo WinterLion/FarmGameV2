@@ -20,7 +20,7 @@ import qcox.tacoma.uw.edu.farmgame.data.PlayerValuesDB;
  * @since 2016-5-4
  */
 public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFragmentInteractionListener,
-        SiloFragment.OnFragmentInteractionListener, ItemListFragment.OnListFragmentInteractionListener {
+        ItemListFragment.OnListFragmentInteractionListener {
 
     int mPos;
 
@@ -49,7 +49,7 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
 
     /**
      * this is used to starts the high score activity when the highscore button is pressed.
-     * @param v
+     * @param v the view that called the method (the button)
      */
     public void viewHighScores(View v) {
         Intent intent = new Intent(getApplicationContext(), HighScoreActivity.class);
@@ -58,7 +58,7 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
 
     /**
      * this starts the itemFragment which contains a list of items and how much the player has.
-     * @param v
+     * @param v the view that called the method (the button)
      */
     public void startSiloList(View v) {
         ItemListFragment itemFragment = new ItemListFragment();
@@ -75,7 +75,7 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
 
     /**
      * this is when an item has its buy button pressed.
-     * @param v
+     * @param v the view that called the method (the button)
      */
     public void buyInventoryItems(View v) {
         int cost = PlayerValues.getPlantItems(mPos).buyCost;
@@ -108,7 +108,7 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
 
     /**
      * this is when an item has its sell button pressed.
-     * @param v
+     * @param v the view that called the method (the button)
      */
     public void sellInventoryItems(View v) {
         int cost = PlayerValues.getPlantItems(mPos).sellCost;
@@ -142,7 +142,6 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
 
     //this is when an inventory item is selected and the details need to be viewed.

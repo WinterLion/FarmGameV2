@@ -10,19 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import qcox.tacoma.uw.edu.farmgame.data.PlayerValues;
-import qcox.tacoma.uw.edu.farmgame.items.ItemContent;
 import qcox.tacoma.uw.edu.farmgame.items.PlantItems;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This is the fragment that the user will see after they click on an item in the item list.  It shows
+ * details about the item.
+ *
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
  */
 public class ItemDetailFragment extends Fragment {
+
+    public static final String ARG_POSITION = "POSITION" ;
 
     public ItemDetailFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,8 +36,6 @@ public class ItemDetailFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_item_detail, container, false);
     }
 
-    public static final String ARG_POSITION = "POSITION" ;
-    //private int mCurrentPosition = -1;
     @Override
     public void onStart() {
         super.onStart();
@@ -47,6 +50,12 @@ public class ItemDetailFragment extends Fragment {
             updateItemView(args.getInt(ARG_POSITION));
         }
     }
+
+    /**
+     * This is where the actual views of the fragment are updated with the appropriate details.
+     *
+     * @param pos this is the position in the recycle viewer that the item is in.
+     */
     public void updateItemView(int pos) {
         PlantItems aPlantItem = PlayerValues.getPlantItems(pos);
         if (aPlantItem.imageResourceIndex != -1) {

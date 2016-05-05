@@ -28,6 +28,10 @@ import qcox.tacoma.uw.edu.farmgame.items.PlantItems;
  * <p/>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
+ *
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
  */
 public class ItemListFragment extends Fragment {
 
@@ -116,6 +120,10 @@ public class ItemListFragment extends Fragment {
         void onListFragmentInteraction(int position);
     }
 
+    /**
+     * This task downloads the list of Plants from the database and stores them in a local class and
+     * displays them in the recycle viewer.
+     */
     private class DownloadPlantsTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPostExecute(String result) {
@@ -126,7 +134,7 @@ public class ItemListFragment extends Fragment {
                 return;
             }
 
-            List<PlantItems> plantItemsList = new ArrayList<PlantItems>();
+            List<PlantItems> plantItemsList = new ArrayList<>();
             result = PlantItems.parsePlantsJSONJSON(result, plantItemsList);
             // Something wrong with the JSON returned.
             if (result != null) {
@@ -154,7 +162,7 @@ public class ItemListFragment extends Fragment {
                     InputStream content = urlConnection.getInputStream();
 
                     BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                    String s = "";
+                    String s;
                     while ((s = buffer.readLine()) != null) {
                         response += s;
                     }

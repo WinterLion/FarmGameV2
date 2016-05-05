@@ -6,7 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by Cox Family on 4/30/2016.
+ * This class will eventually store the users inventory on their local device.
+ *
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
  */
 public class SiloDB {
 
@@ -26,16 +30,16 @@ public class SiloDB {
 
     /**
      * Inserts the inventory into the local sqlite table. Returns true if successful, false otherwise.
-     * @param id
-     * @param name
-     * @param itemType
-     * @param itemTypeDetail
-     * @param quantity
-     * @param buyCost
-     * @param sellCost
-     * @param growTime
-     * @param description
-     * @param imageName
+     * @param id  this is the id of the item
+     * @param name this is the name of the item
+     * @param itemType this is the type of the item
+     * @param itemTypeDetail this is for if there is more needed info about the item
+     * @param quantity this is how much of the item the user has
+     * @param buyCost this is the buy cost
+     * @param sellCost this is the sell cost
+     * @param growTime this is how long it takes to grow
+     * @param description this is a longer description of the item
+     * @param imageName this is the name of the item in the file directory so it can be viewed.
      * @return true or false
      */
     public boolean insertInventory(String id, String name, String itemType, String itemTypeDetail
@@ -63,16 +67,6 @@ public class SiloDB {
 
 
     class SiloDBHelper extends SQLiteOpenHelper {
-//        String id = "basic_wheat";
-//        String name = "Wheat";
-//        String itemType = "plant";
-//        String itemTypeDetail = "";
-//        int quantity = 1;
-//        int buyCost = 5;
-//        int sellCost = 3;
-//        int growTime = 10;
-//        String description = "Wheat is easy to grow but not worth much";
-//        String imageName = "wheat";
 
         private static final String CREATE_INVENTORY_SQL =
                 "CREATE TABLE IF NOT EXISTS Inventory "

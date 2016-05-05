@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass which currently holds the buttons to the
  * highscore activity and the itemListfragment that shows the inventory.
+ *
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
  */
 public class FarmFragment extends Fragment {
 

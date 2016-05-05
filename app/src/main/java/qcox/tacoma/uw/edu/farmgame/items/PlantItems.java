@@ -11,9 +11,10 @@ import java.util.List;
 import qcox.tacoma.uw.edu.farmgame.R;
 
 /**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- * <p/>
+ * This class represents an item in the game that can be planted and grown.
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
  *
  */
 public class PlantItems implements Serializable {
@@ -56,7 +57,7 @@ public class PlantItems implements Serializable {
     /**
      * Parses the json string, returns an error message if unsuccessful.
      * Returns plant item list if success.
-     * @param plantsJSON
+     * @param plantsJSON this is the string returned from the PHP
      * @return reason or null if successful.
      */
     public static String parsePlantsJSONJSON(String plantsJSON, List<PlantItems> plantItemsList) {
@@ -79,7 +80,6 @@ public class PlantItems implements Serializable {
             } catch (JSONException e) {
                 reason =  "Unable to parse data, Reason: " + e.getMessage();
             }
-
         }
         System.out.print(reason);
         return reason;

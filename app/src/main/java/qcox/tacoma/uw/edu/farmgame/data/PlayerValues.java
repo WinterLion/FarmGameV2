@@ -10,11 +10,19 @@ import qcox.tacoma.uw.edu.farmgame.items.PlantItems;
 /**
  * This class holds some of the values that the player will need to play the game.
  *
- * Created by Quinn Cox on 5/2/2016.
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
  */
 public class PlayerValues {
-
+    //this is the money the player has
     private static int mMoney = 100;
+    //this is used with the database to id the user
+    public static String mUserName;
+    //these are the amounts of each item the player has
+    public static final Map<String, Integer> ITEM_MAP = new HashMap<>();
+    //these are the descriptions of the items
+    public static List<PlantItems> mPlantItemsList = new ArrayList<>();
 
     public static String getUserName() {
         return mUserName;
@@ -23,10 +31,6 @@ public class PlayerValues {
     public static void setUserName(String mUserName) {
         PlayerValues.mUserName = mUserName;
     }
-
-    public static String mUserName;
-    public static final Map<String, Integer> ITEM_MAP = new HashMap<>();
-    public static List<PlantItems> mPlantItemsList = new ArrayList<>();
 
     public static int getMoney() {
         return mMoney;
@@ -63,8 +67,5 @@ public class PlayerValues {
     public static void setPlantItemsList(List<PlantItems> PlantItemsList) {
         mPlantItemsList = PlantItemsList;
     }
-
-
-
 
 }

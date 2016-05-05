@@ -9,14 +9,20 @@ import android.widget.TextView;
 
 import qcox.tacoma.uw.edu.farmgame.ItemListFragment.OnListFragmentInteractionListener;
 import qcox.tacoma.uw.edu.farmgame.data.PlayerValues;
-import qcox.tacoma.uw.edu.farmgame.items.ItemContent;
 import qcox.tacoma.uw.edu.farmgame.items.PlantItems;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link ItemContent.FarmItem} and makes a call to the
+ * This Recycler View shows a list of all the items in the game and shows how many the player has of
+ * each.
+ *
+ * {@link RecyclerView.Adapter} that can display a {@link PlantItems} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
+ *
+ * @author James, Quinn
+ * @version 1.0
+ * @since 2016-5-4
  *
  */
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
