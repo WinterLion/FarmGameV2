@@ -70,11 +70,11 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
         CharSequence text;
         if (numToBuy < 1) {
             text= "You must pick a valid value for the amount";
-        } else if (cost * numToBuy <= PlayerValues.mMoney) {
+        } else if (cost * numToBuy <= PlayerValues.getMoney()) {
             PlayerValues.addItemAmount(PlayerValues.getPlantItems(mPos).name, numToBuy);
-            PlayerValues.mMoney -= cost * numToBuy;
+            PlayerValues.setMoney(PlayerValues.getMoney() - cost * numToBuy);
             PlayerValuesDB theTask = new PlayerValuesDB();
-            theTask.UpdateUserMoney(this, PlayerValues.mMoney);
+            theTask.UpdateUserMoney(this, PlayerValues.getMoney());
             text = "You just bought " + numToBuy + " " + PlayerValues.getPlantItems(mPos).name
                     + " for " + cost * numToBuy + " coins.";
         } else {
@@ -103,9 +103,9 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
             text= "You must pick a valid value for the amount";
         } else if (numToSell <= currentAmount) {
             PlayerValues.setItemAmount(PlayerValues.getPlantItems(mPos).name, currentAmount - numToSell);
-            PlayerValues.mMoney += cost * numToSell;
+            PlayerValues.setMoney(PlayerValues.getMoney() + cost * numToSell);
             PlayerValuesDB theTask = new PlayerValuesDB();
-            theTask.UpdateUserMoney(this, PlayerValues.mMoney);
+            theTask.UpdateUserMoney(this, PlayerValues.getMoney());
             text = "You just sold " + numToSell + " " + PlayerValues.getPlantItems(mPos).name
                     + " for " + cost * numToSell + " coins.";
         } else {
@@ -128,7 +128,7 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
         mPos = position;
         ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
         Bundle args = new Bundle();
-        args.putInt(itemDetailFragment.ARG_POSITION, position);
+        args.putInt(ItemDetailFragment.ARG_POSITION, position);
         itemDetailFragment.setArguments(args);
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction()

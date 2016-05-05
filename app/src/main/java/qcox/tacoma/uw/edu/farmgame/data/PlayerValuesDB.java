@@ -20,12 +20,17 @@ import qcox.tacoma.uw.edu.farmgame.MyscoreRecyclerViewAdapter;
 import qcox.tacoma.uw.edu.farmgame.highscore.HighScore;
 
 /**
- * Created by Cox Family on 5/4/2016.
+ * This class was meant to be used for communicating with the server for various things.  Right now
+ * all we have is the communications for the money.
+ *
+ * Created by Quinn Cox on 5/4/2016.
  */
 public class PlayerValuesDB {
 
+    //this is the URL to get the money the player currently has.
     private static final String GET_PLAYER_MONEY_URL
             = "http://cssgate.insttech.washington.edu/~_450atm17/playervalues.php?cmd=getmoney&user=";
+    //this is the URL to set the money the player has onto the server database.
     private static final String SET_PLAYER_MONEY_URL
             = "http://cssgate.insttech.washington.edu/~_450atm17/playervalues.php?cmd=setmoney&user=";
     private Activity mActivity;
@@ -33,40 +38,58 @@ public class PlayerValuesDB {
     public void GetUserMoney(Activity theActivity) {
         mActivity = theActivity;
         DownloadUserMoneyTask task = new DownloadUserMoneyTask();
-        task.execute(new String[]{GET_PLAYER_MONEY_URL + PlayerValues.getUserName()});
+        task.execute(GET_PLAYER_MONEY_URL + PlayerValues.getUserName());
 
     }
 
+    /**
+     * This method will start an asynch task that updates the server database with the new money amount.
+     *
+     * @param theActivity this is needed to allow toasts
+     * @param theNewAmount this is the amount that will be put on the server database.
+     */
     public void UpdateUserMoney(Activity theActivity, int theNewAmount) {
         mActivity = theActivity;
-        DownloadUserMoneyTask task = new DownloadUserMoneyTask();
-        task.execute(new String[]{SET_PLAYER_MONEY_URL + PlayerValues.getUserName() + "&money=" + theNewAmount});
+        //decided to turn off this feature for now until we figure out the full storage scheme.
+        //UploadUserMoneyTask task = new UploadUserMoneyTask();
+        //task.execute(new String[]{SET_PLAYER_MONEY_URL + PlayerValues.getUserName() + "&money=" + theNewAmount});
 
     }
 
     /**
      * Parses the json string, returns an error message if unsuccessful.
      * Returns amount of item if success.
-     * @param amountJSON
+     * @param amountJSON this is the string returned from the php file.
      * @return reason or null if successful.
      */
-    public static String parseAmountJSONJSON(String amountJSON, int theAmount) {
+    public static String parseGetAmountJSONJSON(String amountJSON) {
         String reason = null;
         if (amountJSON != null) {
             try {
                 JSONArray arr = new JSONArray(amountJSON);
-
-
-                    JSONObject obj = arr.getJSONObject(0);
-                    int amount = Integer.parseInt(obj.getString("amount"));
-                    theAmount = amount;
+                JSONObject obj = arr.getJSONObject(0);
+                int amount = Integer.parseInt(obj.getString("money"));
+                PlayerValues.setMoney(amount);
 
             } catch (JSONException e) {
                 reason =  "Unable to parse data, Reason: " + e.getMessage();
             }
-
         }
         System.out.print(reason);
+        return reason;
+    }
+
+    public static String parseSetAmountJSONJSON(String amountJSON) {
+        String reason = null;
+        if (amountJSON != null) {
+            try {
+
+                JSONObject obj = new JSONObject(amountJSON);
+                reason = (obj.getString("result"));
+            } catch (JSONException e) {
+                reason =  "Unable to parse data, Reason: " + e.getMessage();
+            }
+        }
         return reason;
     }
 
@@ -79,18 +102,12 @@ public class PlayerValuesDB {
                         .show();
                 return;
             }
-
-            int moneyAmount = 0;
-            result = PlayerValuesDB.parseAmountJSONJSON(result, moneyAmount);
+            result = PlayerValuesDB.parseGetAmountJSONJSON(result);
             // Something wrong with the JSON returned.
             if (result != null) {
                 Toast.makeText(mActivity.getApplicationContext(), result, Toast.LENGTH_LONG)
                         .show();
-                return;
             }
-
-            // Everything is good, show the list of courses.
-            PlayerValues.setMoney(moneyAmount);
         }
 
         @Override
@@ -105,13 +122,62 @@ public class PlayerValuesDB {
                     InputStream content = urlConnection.getInputStream();
 
                     BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                    String s = "";
+                    String s;
                     while ((s = buffer.readLine()) != null) {
                         response += s;
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to download the list of highscores, Reason: "
+                    response = "Unable to download, Reason: "
+                            + e.getMessage();
+                }
+                finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            }
+            return response;
+        }
+
+
+    }
+
+    private class UploadUserMoneyTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPostExecute(String result) {
+            // Something wrong with the network or the URL.
+            if (result.startsWith("Unable to")) {
+                Toast.makeText(mActivity.getApplicationContext(), result, Toast.LENGTH_LONG)
+                        .show();
+                return;
+            }
+            result = PlayerValuesDB.parseSetAmountJSONJSON(result);
+            // Something wrong with the JSON returned.
+            if (result != null && result.equals("success")) {
+                Toast.makeText(mActivity.getApplicationContext(), result, Toast.LENGTH_LONG)
+                        .show();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            for (String url : urls) {
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+
+                    InputStream content = urlConnection.getInputStream();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s;
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    response = "Unable to download, Reason: "
                             + e.getMessage();
                 }
                 finally {

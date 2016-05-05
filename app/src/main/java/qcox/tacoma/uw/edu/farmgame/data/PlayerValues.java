@@ -8,11 +8,13 @@ import java.util.Map;
 import qcox.tacoma.uw.edu.farmgame.items.PlantItems;
 
 /**
- * Created by Cox Family on 5/2/2016.
+ * This class holds some of the values that the player will need to play the game.
+ *
+ * Created by Quinn Cox on 5/2/2016.
  */
 public class PlayerValues {
 
-    public static int mMoney = 0;
+    private static int mMoney = 100;
 
     public static String getUserName() {
         return mUserName;
@@ -23,8 +25,8 @@ public class PlayerValues {
     }
 
     public static String mUserName;
-    public static final Map<String, Integer> ITEM_MAP = new HashMap<String, Integer>();
-    public static List<PlantItems> mPlantItemsList = new ArrayList<PlantItems>();
+    public static final Map<String, Integer> ITEM_MAP = new HashMap<>();
+    public static List<PlantItems> mPlantItemsList = new ArrayList<>();
 
     public static int getMoney() {
         return mMoney;
