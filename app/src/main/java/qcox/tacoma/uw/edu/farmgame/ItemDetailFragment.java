@@ -44,7 +44,7 @@ public class ItemDetailFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             // Set article based on argument passed in
-            updateItemView((int)args.getInt(ARG_POSITION));
+            updateItemView(args.getInt(ARG_POSITION));
         }
     }
     public void updateItemView(int pos) {
@@ -54,7 +54,7 @@ public class ItemDetailFragment extends Fragment {
             itemImageView.setImageResource(aPlantItem.imageResourceIndex);
         }
         TextView moneyTextView = (TextView) getActivity().findViewById(R.id.item_detail_money_amount);
-        int money = PlayerValues.mMoney;
+        int money = PlayerValues.getMoney();
         moneyTextView.setText(String.valueOf(money));
         TextView itemNameTextView = (TextView) getActivity().findViewById(R.id.item_detail_name);
         itemNameTextView.setText(aPlantItem.name);
