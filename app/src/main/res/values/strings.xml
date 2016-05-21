@@ -24,5 +24,18 @@
     <string name="button_sell">Sell</string>
 
     <string name="action_settings">Settings</string>
+    <string-array name="array_corps">
+        <item name="wheat">wheat</item>
+        <item name="corn">corn</item>
+        <item name="potato">potato</item>
+        <item name="strawberry">strawberry</item>
+        <item name="not_now">not now</item>
+    </string-array>
+    <string name="plant_a_seed">Plant a seed</string>
+    <integer name="cornMutureTime">6001</integer>
+    <integer name="wheatMutureTime">4001</integer>
+    <integer name="strawberryMutureTime">20001</integer>
+    <integer name="potatoMutureTime">10001</integer>
+
 
 </resources>

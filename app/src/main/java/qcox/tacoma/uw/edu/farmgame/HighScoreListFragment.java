@@ -31,9 +31,7 @@ import qcox.tacoma.uw.edu.farmgame.highscore.HighScore;
  */
 public class HighScoreListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
@@ -135,7 +133,7 @@ public class HighScoreListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
+        // TODO: Update argument typeOfCrops and name
         void onListFragmentInteraction(HighScore item);
 
     }
