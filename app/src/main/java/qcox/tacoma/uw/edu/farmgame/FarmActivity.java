@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -198,18 +199,26 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.i("onItemClick called ","test");
         mAdapter = (BaseAdapterHelper_farmField) parent.getAdapter();
-        Log.e(position+",mutureOnclick111:  "+mAdapter.getMutureTime(position), "runnable");
         FieldPlantSeedListDialogFragment fieldPlantSeedListDialogFragment = new FieldPlantSeedListDialogFragment();
         myBundle.putInt("position", position);
-        //TODO fix bugs
-        if (mAdapter.getMutureTime(position) < 0){
-            Log.e(position+",mutureOnclick222:  "+mAdapter.getMutureTime(position), "runnable");
+        if (BaseAdapterHelper_farmField.field_arraylist.get(position).mutureTime < 0){
             Toast.makeText(getApplicationContext(), "You have harvested your crops", Toast.LENGTH_SHORT).show();
-            updateMoneyExp(mAdapter.field_arraylist.get(position).typeOfCrops);
-            Log.e(position+",mutureOnclick333:  "+mAdapter.getMutureTime(position), "runnable");
-            mAdapter.setMutureTime(position, 0);
-            Log.e(position+",mutureOnclick444:  "+mAdapter.getMutureTime(position), "runnable");
+            mAdapter.field_arraylist.get(position).imageID = R.drawable.field_100dp;
+            mAdapter.notifyDataSetChanged();
+            Log.i("onItemClick notify","test");
+            boolean levelUp = updateMoneyExp(mAdapter.field_arraylist.get(position).typeOfCrops);
+            Log.i("onItemClick boolean" + levelUp,"test");
+            Log.i("onItemClick updateMoney","test");
+            //initial the field
+            BaseAdapterHelper_farmField.field_arraylist.get(position).mutureTime = 0;
+            BaseAdapterHelper_farmField.field_arraylist.get(position).typeOfCrops = Config.FIELD;
+            Log.i("onItemClick muture = 0","test");
+//            if (levelUp){
+//                mAdapter.getView(position,view,parent).performClick();
+//                Log.i("onItemClick click","test");
+//            }
         }
         else{
             fieldPlantSeedListDialogFragment.show(getSupportFragmentManager(), "what is this parameter?");
@@ -220,10 +229,11 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
 
     @Override
     public void plantSeed(String seed) {
-
+        Log.i("plantSeed called ","test");
         if (seed.equals(Config.CORN)){
             int position = myBundle.getInt("position");
-            final Field field = (Field) mAdapter.getItem(position);
+
+            final Field field = (Field) mAdapter.field_arraylist.get(position);
             field.imageID = R.drawable.corn_100dp;
             field.mutureTime = Config.CORNMUTURETIME;
             field.typeOfCrops = Config.CORN;
@@ -246,7 +256,7 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
 
         if (seed.equals(Config.WHEAT)){
             final int position = myBundle.getInt("position");
-            final Field field = (Field) mAdapter.getItem(position);
+            final Field field = (Field) mAdapter.field_arraylist.get(position);
             field.imageID = R.drawable.wheat_100dp;
             field.mutureTime = Config.WHEATMUTURETIME;
             field.typeOfCrops = Config.WHEAT;
@@ -268,7 +278,7 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
         }
         if (seed.equals(Config.STRAWBERRY)){
             int position = myBundle.getInt("position");
-            final Field field = (Field) mAdapter.getItem(position);
+            final Field field = (Field) mAdapter.field_arraylist.get(position);
             field.imageID = R.drawable.strawberry_100dp;
             field.mutureTime = Config.STRAWBERRYMUTURETIME;
             field.typeOfCrops = Config.STRAWBERRY;
@@ -290,7 +300,7 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
 
         if (seed.equals(Config.POTATO)){
             int position = myBundle.getInt("position");
-            final Field field = (Field) mAdapter.getItem(position);
+            final Field field = (Field) mAdapter.field_arraylist.get(position);
             field.imageID = R.drawable.potato_100dp;
             field.mutureTime = Config.POTATOMUTURETIME;
             field.typeOfCrops = Config.POTATO;
@@ -310,54 +320,164 @@ public class FarmActivity extends AppCompatActivity implements FarmFragment.OnFr
         }
     }
 
-    public void updateMoneyExp(String typeOfCrops){
+    public boolean updateMoneyExp(String typeOfCrops){
+        Log.i("updateMoney called ","test");
         switch (typeOfCrops){
             case Config.CORN:{
+                Log.e("2,"+ typeOfCrops+mMoney+","+Config.CORNMONEY, "money");
                 mExp += Config.CORNEXP;
                 mMoney += Config.CORNMONEY;
-                checkLevelUp();
+                Log.e("3,"+ typeOfCrops+mMoney+","+Config.CORNMONEY, "money");
+                return checkLevelUp();
+//                Log.i("updateMoney "+typeOfCrops ,"test");
+//                break;
             }
             case Config.WHEAT:{
+                Log.e("2,"+ typeOfCrops+mMoney+","+Config.CORNMONEY, "money");
                 mExp += Config.WHEATEXP;
                 mMoney += Config.WHEATMONEY;
-                checkLevelUp();
+                Log.e("3,"+ typeOfCrops+mMoney+","+Config.CORNMONEY, "money");
+                return checkLevelUp();
+//                Log.i("updateMoney "+typeOfCrops ,"test");
+//                break;
             }
             case Config.STRAWBERRY:{
+                Log.e("2,"+ typeOfCrops+mMoney+","+Config.CORNMONEY, "money");
                 mExp += Config.STRAWBERRYEXP;
                 mMoney += Config.STRAWBERRYMONEY;
-                checkLevelUp();
+                Log.e("3,"+ typeOfCrops+mMoney+","+Config.CORNMONEY, "money");
+                return checkLevelUp();
+//                Log.i("updateMoney "+typeOfCrops ,"test");
+//                break;
             }
             case Config.POTATO:{
+                Log.e("2,"+ typeOfCrops+mMoney+","+Config.CORNMONEY, "money");
                 mExp += Config.POTATOEXP;
                 mMoney += Config.POTATOMONEY;
-                checkLevelUp();
+                Log.e("3,"+ typeOfCrops+mMoney+","+Config.CORNMONEY, "money");
+                return checkLevelUp();
+//                Log.i("updateMoney "+typeOfCrops ,"test");
+//                break;
             }
-            default: break;
+            default:
+                Log.i("updateMoney default"+typeOfCrops ,"test");
+                return checkLevelUp();
+//                break;
         }
     }
 
-    public void checkLevelUp(){
+    public boolean checkLevelUp(){
+        TextView levelTextView = (TextView) findViewById(R.id.level_textView);
+        TextView moneyTextView = (TextView) findViewById(R.id.money_textView);
+        TextView expTextView = (TextView) findViewById(R.id.experience_textView);
+
+        Log.i("checkLevelUp called ","test");
         if (mExp >= Config.LEVELUPEXPERIENCEREQUIRED){
+            Log.i("level up " + mLevel,"levelup");
             mLevel++;
             mExp -= Config.LEVELUPEXPERIENCEREQUIRED;
+            levelTextView.setText("Lv: "+mLevel);
+            moneyTextView.setText("$: "+mMoney);
+            expTextView.setText("Exp: "+mExp);
+            mAdapter = new BaseAdapterHelper_farmField(getApplicationContext(),FarmActivity.mLevel * Config.LEVELUPFIELDGAP + Config.INITIALFIELD);
+            Log.i("checkLvUp newAdapter" ,"test");
+            levelUpNewAdapterAnimation();
+            Log.i("checkLvUp Animation" ,"test");
+            return true;
         }
+        levelTextView.setText("Lv: "+mLevel);
+        moneyTextView.setText("$: "+mMoney);
+        expTextView.setText("Exp: "+mExp);
+        Log.i("checkLvUp last" ,"test");
+        return false;
     }
 
-//    /**
-//     * happened when the one of the listfragment is clicked.
-//     * add that specific fragment detail to activity.
-//     * @param item
-//     */
-//    @Override
-//    public void onListFragmentInteraction(HighScore item) {
-//        HighscoreDetailFragment highscoreDetailFragment = new HighscoreDetailFragment();
-//        Bundle args = new Bundle();
-//        args.putSerializable(HighscoreDetailFragment.HIGHSCORE_ITEM_SELECTED, item);
-//        highscoreDetailFragment.setArguments(args);
-//
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.highScoreActivity_container, highscoreDetailFragment)
-//                .addToBackStack(null)
-//                .commit();
-//    }
+    /**
+     * Continue animation of the crops since new adater is created and all previous animation is gone.
+     *
+     */
+    public void levelUpNewAdapterAnimation() {
+        Log.i("Animation called ","test");
+        for (int i = 0; i < mAdapter.field_arraylist.size(); i++){
+            final Field field = mAdapter.field_arraylist.get(i);
+            String seed = field.typeOfCrops;
+
+            if (seed.equals(Config.CORN)){
+                field.imageID = R.drawable.corn_100dp;
+                field.typeOfCrops = Config.CORN;
+                mAdapter.notifyDataSetChanged();
+                final Handler handler = new Handler();
+                final Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        field.mutureTime -= 1000;
+                        mAdapter.notifyDataSetChanged();
+                        if (field.mutureTime > 0){
+                            handler.postDelayed(this, 1000);
+                        }
+                        Log.i("1,mutureTime: "+field.mutureTime, "runnable");
+                    }
+                };
+                handler.postDelayed(runnable, 1000);
+            }
+
+            if (seed.equals(Config.WHEAT)){
+                field.imageID = R.drawable.wheat_100dp;
+                field.typeOfCrops = Config.WHEAT;
+                mAdapter.notifyDataSetChanged();
+                final Handler handler = new Handler();
+                final Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        field.mutureTime -= 1000;
+                        mAdapter.notifyDataSetChanged();
+                        if (field.mutureTime > 0){
+                            handler.postDelayed(this, 1000);
+                        }
+                    }
+                };
+                handler.postDelayed(runnable, 1000);
+
+            }
+            if (seed.equals(Config.STRAWBERRY)){
+                field.imageID = R.drawable.strawberry_100dp;
+                field.typeOfCrops = Config.STRAWBERRY;
+                mAdapter.notifyDataSetChanged();
+                final Handler handler = new Handler();
+                final Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        field.mutureTime -= 1000;
+                        mAdapter.notifyDataSetChanged();
+                        if (field.mutureTime > 0){
+                            handler.postDelayed(this, 1000);
+                        }
+                    }
+                };
+                handler.postDelayed(runnable, 1000);
+
+            }
+
+            if (seed.equals(Config.POTATO)){
+                field.imageID = R.drawable.potato_100dp;
+                field.typeOfCrops = Config.POTATO;
+                mAdapter.notifyDataSetChanged();
+                final Handler handler = new Handler();
+                final Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        field.mutureTime -= 1000;
+                        mAdapter.notifyDataSetChanged();
+                        if (field.mutureTime > 0){
+                            handler.postDelayed(this, 1000);
+                        }
+                    }
+                };
+                handler.postDelayed(runnable, 1000);
+            }
+        }
+
+    }
+
+
 }

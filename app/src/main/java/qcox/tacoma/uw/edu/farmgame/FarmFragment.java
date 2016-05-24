@@ -91,18 +91,34 @@ class Field {
 class BaseAdapterHelper_farmField extends BaseAdapter{
 
     public static ArrayList<Field> field_arraylist;
-    int[] myCropsMutureTime;
 
 
     Context context;
     BaseAdapterHelper_farmField(Context context, int numOfField){
-        myCropsMutureTime = new int[numOfField];
         this.context = context;
-        field_arraylist = new ArrayList<Field>();
-        for (int i = 0; i < numOfField; i++){
-            field_arraylist.add(new Field(R.drawable.field_100dp, Config.FIELD, 0));
-            myCropsMutureTime[i] = 0;
+        if (field_arraylist == null){
+            field_arraylist = new ArrayList<Field>();
+            for (int i = 0; i < numOfField; i++){
+                field_arraylist.add(new Field(R.drawable.field_100dp, Config.FIELD, 0));
+            }
         }
+        else {
+            for (int i = 0; i < numOfField; i++){
+                Log.i("1, new adapter " + numOfField+","+field_arraylist.size(),"levelup");
+                if (field_arraylist.size() > i){
+                    Log.i("2, new adapter " + numOfField+","+field_arraylist.size(),"levelup");
+                    field_arraylist.set(i, new Field(R.drawable.field_100dp,
+                            field_arraylist.get(i).typeOfCrops, field_arraylist.get(i).mutureTime));
+                    Log.i("3, new adapter " + numOfField+","+field_arraylist.size(),"levelup");
+                }
+                else {
+                    field_arraylist.add(new Field(R.drawable.field_100dp, Config.FIELD, 0));
+                    Log.i("4, new adapter " + numOfField+","+field_arraylist.size(),"levelup");
+                }
+
+            }
+        }
+
     }
 
 
@@ -149,13 +165,6 @@ class BaseAdapterHelper_farmField extends BaseAdapter{
             viewHolder.myTimer_TextView.setText("");
         }
 
-        Log.e(position+",getView111:  "+this.getMutureTime(position), "runnable");
-        //TODO: fix the muture time
-        myCropsMutureTime[position] = tempField.mutureTime;
-        if (myCropsMutureTime[position] == -999){
-            myCropsMutureTime[position] = 0;
-        }
-        Log.e(position+",getView222:  "+this.getMutureTime(position), "runnable");
         return fieldView;
     }
 
@@ -168,21 +177,15 @@ class BaseAdapterHelper_farmField extends BaseAdapter{
     @Override
     public boolean isEnabled(int position) {
         // Return true for clickable, false for not
-        if (myCropsMutureTime[position] < 0){
+        if (BaseAdapterHelper_farmField.field_arraylist.get(position).mutureTime < 0){
             return true;
-        }else if (myCropsMutureTime[position] == 0){
+        }else if (BaseAdapterHelper_farmField.field_arraylist.get(position).mutureTime == 0){
             return true;
         }else{
             return false;
         }
     }
 
-    public int getMutureTime (int position){
-        return myCropsMutureTime[position];
-    }
-    public void setMutureTime (int position, int time){
-        myCropsMutureTime[position] = time;
-    }
 
 
 
