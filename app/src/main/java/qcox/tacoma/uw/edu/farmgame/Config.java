@@ -8,7 +8,7 @@ public class Config {
     final public static int LEVELUPFIELDGAP = 1;//number of field player get reward when level up
     final public static int INITIALMONEY = 20; //initial money the player has
     final public static int EXPERIENCE = 0; //initial experience the player has
-    final public static int LEVELUPEXPERIENCEREQUIRED = 20; //the experience player need to level up
+    final public static int LEVELUPEXPERIENCEREQUIRED = 10; //the experience player need to level up
     final public static int WHEATMUTURETIME = 4001; //wheat muture time.
     final public static int CORNMUTURETIME = 6001;//corn muture time
     final public static int POTATOMUTURETIME = 10001;//potato muture time
